@@ -35,8 +35,17 @@ imageAdjustments adjustment = NO_ADJ;
 // Rotary encoder variable (used by ISR)
 volatile int val_encoder = 0;
 
-// 
+// Used to get current and passed time for all delays
+unsigned long currentMillis = 0;
 
+// Delay before releasing shortcut keys
+unsigned long lastKeyboardReleased = 0;
+const long intervalReleaseKeys = 30;
+boolean shortcutPressed = false;
+
+// Debouncing of buttons
+unsigned long lastDebounceTime = 0;
+const long debounceDelay = 100;
 
 /* 
  * Setup the Arduino Micro Board 
@@ -140,9 +149,8 @@ void send_shortcut(int adjustment, byte add_sub) {
         }
     }
 
-    // Release pressed keys
-    delay(50);
-    Keyboard.releaseAll();
+    // Confim releasing of keys
+    shortcutPressed = true;
 }
 
 
@@ -152,7 +160,7 @@ void send_shortcut(int adjustment, byte add_sub) {
 void loop() {
 
     // capture the current time
-    //currentMillis = millis();
+    currentMillis = millis();
 
     // Image adjustments
     if (digitalRead(PIN_BTN_EXPOSURE) == LOW) {
@@ -188,5 +196,11 @@ void loop() {
         }
     }
     val_encoder = 0;
+    
+    if (shortcutPressed && currentMillis - lastKeyboardReleased >= intervalReleaseKeys) {
+        Keyboard.releaseAll();
+        lastKeyboardReleased = currentMillis;
+        shortcutPressed = false;
+    }
 }
 
