@@ -35,6 +35,8 @@ imageAdjustments adjustment = NO_ADJ;
 // Rotary encoder variable (used by ISR)
 volatile int val_encoder = 0;
 
+// 
+
 
 /* 
  * Setup the Arduino Micro Board 
@@ -81,25 +83,32 @@ void isr_encoder_sb() {
  *  byte add_sub: ADD or SUB the mode's value
  */
 void send_shortcut(int adjustment, byte add_sub) {
+
+    // Press shortcut start keys
+    for (int i = 0; i < sizeof(SHORTCUT_START); i++) {
+        Keyboard.press(SHORTCUT_START[i]);
+    }
+    
+    // Press keys increase or decrease shortcut according to adjustment
     if (add_sub == ADD) {
         switch (adjustment) {
             case ADJ_EXPOSURE: 
-                send_keypress(EXPOSURE_ADD);
+                Keyboard.press(EXPOSURE_ADD);
                 break;
             case ADJ_CONTRAST:
-                send_keypress(CONTRAST_ADD);
+                Keyboard.press(CONTRAST_ADD);
                 break;
             case ADJ_SATURATION: 
-                send_keypress(SATURATION_ADD);
+                Keyboard.press(SATURATION_ADD);
                 break;
             case ADJ_SHADOW: 
-                send_keypress(SHADOW_ADD);
+                Keyboard.press(SHADOW_ADD);
                 break;
             case ADJ_HIGHLIGHT: 
-                send_keypress(HIGHLIGHT_ADD);
+                Keyboard.press(HIGHLIGHT_ADD);
                 break;
             case ADJ_CLARITY: 
-                send_keypress(CLARITY_ADD);
+                Keyboard.press(CLARITY_ADD);
                 break;
             default:
                 adjustment = NO_ADJ;
@@ -108,54 +117,30 @@ void send_shortcut(int adjustment, byte add_sub) {
     } else {
         switch (adjustment) {
             case ADJ_EXPOSURE: 
-                send_keypress(EXPOSURE_SUB);
+                Keyboard.press(EXPOSURE_SUB);
                 break;
             case ADJ_CONTRAST:
-                send_keypress(CONTRAST_SUB);
+                Keyboard.press(CONTRAST_SUB);
                 break;
             case ADJ_SATURATION: 
-                send_keypress(SATURATION_SUB);
+                Keyboard.press(SATURATION_SUB);
                 break;
             case ADJ_SHADOW: 
-                send_keypress(SHADOW_SUB);
+                Keyboard.press(SHADOW_SUB);
                 break;
             case ADJ_HIGHLIGHT: 
-                send_keypress(HIGHLIGHT_SUB);
+                Keyboard.press(HIGHLIGHT_SUB);
                 break;
             case ADJ_CLARITY: 
-                send_keypress(CLARITY_SUB);
+                Keyboard.press(CLARITY_SUB);
                 break;
             default:
                 adjustment = NO_ADJ;
                 break;
         }
     }
-}
 
-
-/* 
- * Send all key pressed for a shortcut with a char value
- * char shortcut_end : last shortcut key, just after SHORTCUT_START. Example = 'A'
- */
-void send_keypress(char shortcut_end) {
-    for (int i = 0; i < sizeof(SHORTCUT_START); i++) {
-        Keyboard.press(SHORTCUT_START[i]);
-    }
-    Keyboard.press(shortcut_end);
-    delay(100);
-    Keyboard.releaseAll();
-}
-
-
-/* 
- * Send all key pressed for a shortcut with a int value
- * char shortcut_end : last shortcut key, just after SHORTCUT_START. Example = 'A'
- */
-void send_keypress(int shortcut_end) {
-    for (int i = 0; i < sizeof(SHORTCUT_START); i++) {
-        Keyboard.press(SHORTCUT_START[i]);
-    }
-    Keyboard.press(shortcut_end);
+    // Release pressed keys
     delay(50);
     Keyboard.releaseAll();
 }
@@ -165,6 +150,9 @@ void send_keypress(int shortcut_end) {
  * Main loop 
  */
 void loop() {
+
+    // capture the current time
+    //currentMillis = millis();
 
     // Image adjustments
     if (digitalRead(PIN_BTN_EXPOSURE) == LOW) {
