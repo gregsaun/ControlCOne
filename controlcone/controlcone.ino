@@ -8,24 +8,25 @@
 * 
 * Description :
 * This control panel will use mecanical interface such as buttons and rotary
-* encoders to send keyboard shortcuts via USB using an Arduino. These
-* shortcuts will be configured in Phase One Capture One Pro 10 to do adjustment
-* on images like contrast or exposition.
+* encoders to send keyboard shortcuts via USB using a Teensy 3.5 board. These
+* shortcuts are configured in Phase One Capture One Pro 10 to do adjustment on
+* images like contrast or exposition.
 * 
 * Hardware used (prototyping state for now) :
-*   - Arduino Micro
+*   - Teensy 3.5 (comparable to Arduino but with fast 32bits microcontroller,
+*                 compact form factor, HID support and tons of IO)
 *   - Rotary Encoder from elecfreaks.com
 *   - Several dip switches
 *   - Breadboard
 * 
 * Ressources :
 *   - Arduino : https://www.arduino.cc
+*   - Teensy : https://www.pjrc.com
 *   - Phase One : https://www.phaseone.com
 *
 ******************************************************************************/
 
 
-#include <Keyboard.h>
 #include "pins.h"
 #include "shortcuts.h"
 
@@ -47,6 +48,7 @@ boolean shortcutPressed = false;
 unsigned long lastDebounceTime = 0;
 const long debounceDelay = 100;
 
+
 /* 
  * Setup the Arduino Micro Board 
  */
@@ -54,7 +56,7 @@ void setup() {
     for (int pin = 2; pin <= 11; pin++) {
         pinMode(pin, INPUT_PULLUP);
     }
-    Keyboard.begin();
+    //Keyboard.begin();
     attachInterrupt(digitalPinToInterrupt(PIN_ENC_SA), isr_encoder_sa, FALLING);
     attachInterrupt(digitalPinToInterrupt(PIN_ENC_SB), isr_encoder_sb, FALLING);
 }
@@ -93,31 +95,29 @@ void isr_encoder_sb() {
  */
 void send_shortcut(int adjustment, byte add_sub) {
 
-    // Press shortcut start keys
-    for (int i = 0; i < sizeof(SHORTCUT_START); i++) {
-        Keyboard.press(SHORTCUT_START[i]);
-    }
+    // Press shortcut start keys (Ctrl + Alt + Shift for example)
+    Keyboard.set_modifier(SHORTCUT_START);
     
     // Press keys increase or decrease shortcut according to adjustment
     if (add_sub == ADD) {
         switch (adjustment) {
-            case ADJ_EXPOSURE: 
-                Keyboard.press(EXPOSURE_ADD);
+            case ADJ_EXPOSURE:
+                Keyboard.set_key1(EXPOSURE_ADD);
                 break;
             case ADJ_CONTRAST:
-                Keyboard.press(CONTRAST_ADD);
+                Keyboard.set_key1(CONTRAST_ADD);
                 break;
-            case ADJ_SATURATION: 
-                Keyboard.press(SATURATION_ADD);
+            case ADJ_SATURATION:
+                Keyboard.set_key1(SATURATION_ADD);
                 break;
-            case ADJ_SHADOW: 
-                Keyboard.press(SHADOW_ADD);
+            case ADJ_SHADOW:
+                Keyboard.set_key1(SHADOW_ADD);
                 break;
-            case ADJ_HIGHLIGHT: 
-                Keyboard.press(HIGHLIGHT_ADD);
+            case ADJ_HIGHLIGHT:
+                Keyboard.set_key1(HIGHLIGHT_ADD);
                 break;
-            case ADJ_CLARITY: 
-                Keyboard.press(CLARITY_ADD);
+            case ADJ_CLARITY:
+                Keyboard.set_key1(CLARITY_ADD);
                 break;
             default:
                 adjustment = NO_ADJ;
@@ -125,29 +125,30 @@ void send_shortcut(int adjustment, byte add_sub) {
         }
     } else {
         switch (adjustment) {
-            case ADJ_EXPOSURE: 
-                Keyboard.press(EXPOSURE_SUB);
+            case ADJ_EXPOSURE:
+                Keyboard.set_key1(EXPOSURE_SUB);
                 break;
             case ADJ_CONTRAST:
-                Keyboard.press(CONTRAST_SUB);
+                Keyboard.set_key1(CONTRAST_SUB);
                 break;
-            case ADJ_SATURATION: 
-                Keyboard.press(SATURATION_SUB);
+            case ADJ_SATURATION:
+                Keyboard.set_key1(SATURATION_SUB);
                 break;
-            case ADJ_SHADOW: 
-                Keyboard.press(SHADOW_SUB);
+            case ADJ_SHADOW:
+                Keyboard.set_key1(SHADOW_SUB);
                 break;
-            case ADJ_HIGHLIGHT: 
-                Keyboard.press(HIGHLIGHT_SUB);
+            case ADJ_HIGHLIGHT:
+                Keyboard.set_key1(HIGHLIGHT_SUB);
                 break;
-            case ADJ_CLARITY: 
-                Keyboard.press(CLARITY_SUB);
+            case ADJ_CLARITY:
+                Keyboard.set_key1(CLARITY_SUB);
                 break;
             default:
                 adjustment = NO_ADJ;
                 break;
         }
     }
+    Keyboard.send_now();
 
     // Confim releasing of keys
     shortcutPressed = true;
@@ -196,9 +197,13 @@ void loop() {
         }
     }
     val_encoder = 0;
-    
+
+
+    // Release all keyboard keys when it's time to do it
     if (shortcutPressed && currentMillis - lastKeyboardReleased >= intervalReleaseKeys) {
-        Keyboard.releaseAll();
+        Keyboard.set_modifier(0);
+        Keyboard.set_key1(0);
+        Keyboard.send_now();
         lastKeyboardReleased = currentMillis;
         shortcutPressed = false;
     }

@@ -30,10 +30,10 @@ const byte SUB = false;
  * All shortcuts used. We use the same keys for
  * the begining of all shortcuts
  */
-const int SHORTCUT_START[] = {KEY_LEFT_CTRL, KEY_LEFT_ALT, KEY_LEFT_SHIFT};
+const int SHORTCUT_START = KEY_LEFT_CTRL | KEY_LEFT_ALT | KEY_LEFT_SHIFT;
 const int EXPOSURE_ADD = KEY_F1;
 const int EXPOSURE_SUB = KEY_F2;
-const int CONTRAST_ADD = 'A';
+const int CONTRAST_ADD = KEY_A;
 const int CONTRAST_SUB = KEY_F4;
 const int SATURATION_ADD = KEY_F5;
 const int SATURATION_SUB = KEY_F6;
