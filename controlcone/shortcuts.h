@@ -22,8 +22,8 @@ enum imageAdjustments {
  * to be applied to the image (like contrast increase or
  * contrast decrease)
  */
-const byte ADD = true;
-const byte SUB = false;
+const boolean ADD = true;
+const boolean SUB = false;
 
 
 /*

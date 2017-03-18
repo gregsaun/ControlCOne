@@ -3,12 +3,12 @@
  * an image. This will not do any changes to the image
  * until we increase or decrease this adjustment.
  */
-const int PIN_BTN_EXPOSURE = 4;
-const int PIN_BTN_CONTRAST = 5;
-const int PIN_BTN_SATURATION = 6;
-const int PIN_BTN_SHADOW = 9;
-const int PIN_BTN_HIGHLIGHT = 10;
-const int PIN_BTN_CLARITY = 11;
+const byte PIN_BTN_EXPOSURE = 4;
+const byte PIN_BTN_CONTRAST = 5;
+const byte PIN_BTN_SATURATION = 6;
+const byte PIN_BTN_SHADOW = 9;
+const byte PIN_BTN_HIGHLIGHT = 10;
+const byte PIN_BTN_CLARITY = 11;
 //const int PIN_BTN_BALANCE_KELVIN = ?;
 //const int PIN_BTN_BALANCE_TINT = ?;
 
@@ -16,8 +16,8 @@ const int PIN_BTN_CLARITY = 11;
 /*
  * Two buttons to increase or decrease an adjustment
  */
-const int PIN_BTN_ADD = 7;
-const int PIN_BTN_SUB = 8;
+const byte PIN_BTN_ADD = 7;
+const byte PIN_BTN_SUB = 8;
 
 
 /*

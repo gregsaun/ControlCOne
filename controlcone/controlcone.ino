@@ -41,19 +41,19 @@ unsigned long currentMillis = 0;
 
 // Delay before releasing shortcut keys
 unsigned long lastKeyboardReleased = 0;
-const long intervalReleaseKeys = 30;
+const int intervalReleaseKeys = 30;
 boolean shortcutPressed = false;
 
 // Debouncing of buttons
 unsigned long lastDebounceTime = 0;
-const long debounceDelay = 100;
+const int debounceDelay = 100;
 
 
 /* 
  * Setup the Arduino Micro Board 
  */
 void setup() {
-    for (int pin = 2; pin <= 11; pin++) {
+    for (byte pin = 2; pin <= 11; pin++) {
         pinMode(pin, INPUT_PULLUP);
     }
     //Keyboard.begin();
@@ -93,7 +93,7 @@ void isr_encoder_sb() {
  *  int adjustment: image adjustment used like ADJ_EXPOSURE or ADJ_CONTRAST
  *  byte add_sub: ADD or SUB the mode's value
  */
-void send_shortcut(int adjustment, byte add_sub) {
+void send_shortcut(byte adjustment, byte add_sub) {
 
     // Press shortcut start keys (Ctrl + Alt + Shift for example)
     Keyboard.set_modifier(SHORTCUT_START);
@@ -102,22 +102,22 @@ void send_shortcut(int adjustment, byte add_sub) {
     if (add_sub == ADD) {
         switch (adjustment) {
             case ADJ_EXPOSURE:
-                Keyboard.set_key1(EXPOSURE_ADD);
+                Keyboard.set_key1((byte) EXPOSURE_ADD);
                 break;
             case ADJ_CONTRAST:
-                Keyboard.set_key1(CONTRAST_ADD);
+                Keyboard.set_key1((byte) CONTRAST_ADD);
                 break;
             case ADJ_SATURATION:
-                Keyboard.set_key1(SATURATION_ADD);
+                Keyboard.set_key1((byte) SATURATION_ADD);
                 break;
             case ADJ_SHADOW:
-                Keyboard.set_key1(SHADOW_ADD);
+                Keyboard.set_key1((byte) SHADOW_ADD);
                 break;
             case ADJ_HIGHLIGHT:
-                Keyboard.set_key1(HIGHLIGHT_ADD);
+                Keyboard.set_key1((byte) HIGHLIGHT_ADD);
                 break;
             case ADJ_CLARITY:
-                Keyboard.set_key1(CLARITY_ADD);
+                Keyboard.set_key1((byte) CLARITY_ADD);
                 break;
             default:
                 adjustment = NO_ADJ;
@@ -126,22 +126,22 @@ void send_shortcut(int adjustment, byte add_sub) {
     } else {
         switch (adjustment) {
             case ADJ_EXPOSURE:
-                Keyboard.set_key1(EXPOSURE_SUB);
+                Keyboard.set_key1((byte) EXPOSURE_SUB);
                 break;
             case ADJ_CONTRAST:
-                Keyboard.set_key1(CONTRAST_SUB);
+                Keyboard.set_key1((byte) CONTRAST_SUB);
                 break;
             case ADJ_SATURATION:
-                Keyboard.set_key1(SATURATION_SUB);
+                Keyboard.set_key1((byte) SATURATION_SUB);
                 break;
             case ADJ_SHADOW:
-                Keyboard.set_key1(SHADOW_SUB);
+                Keyboard.set_key1((byte) SHADOW_SUB);
                 break;
             case ADJ_HIGHLIGHT:
-                Keyboard.set_key1(HIGHLIGHT_SUB);
+                Keyboard.set_key1((byte) HIGHLIGHT_SUB);
                 break;
             case ADJ_CLARITY:
-                Keyboard.set_key1(CLARITY_SUB);
+                Keyboard.set_key1((byte) CLARITY_SUB);
                 break;
             default:
                 adjustment = NO_ADJ;
