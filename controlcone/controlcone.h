@@ -41,9 +41,9 @@ enum adjButtons : char {
     BTN_CROP,
     BTN_ROTATION,  // each keypress will turn around straighten, freehand, left, right
     BTN_SPOT,
-    BTN_MASK_DRAW,
-    BTN_MASK_ERASE,
-    BTN_MASK_DISPLAY,
+    BTN_DRAW_MASK,
+    BTN_ERASE_MASK,
+    BTN_DISPLAY_MASK,
     BTN_BAL_PICK,
     BTN_ADJ,  // toggle adjustments between copy and paste
 };
@@ -55,11 +55,11 @@ enum adjButtons : char {
 const byte ROWS = 6;
 const byte COLS = 5;
 char btns[ROWS][COLS] = {
-    { BTN_EXPO,     BTN_CONTRAST, BTN_SAT,         BTN_SHADOW,     BTN_HL,           },
+    { BTN_EXPO,     BTN_CONTRAST,  BTN_SAT,         BTN_SHADOW,     BTN_HL,           },
     { BTN_CLARITY,  BTN_BAL_TEMP,  BTN_BAL_TINT,    BTN_ADD,        BTN_SUB,          },
     { BTN_AUTO,     BTN_RESET,     BTN_STAR1,       BTN_STAR2,      BTN_STAR3,        },
     { BTN_STAR4,    BTN_STAR5,     BTN_STAR_TOGGLE, BTN_PAN,        BTN_CROP,         },
-    { BTN_ROTATION, BTN_SPOT,      BTN_MASK_DRAW,   BTN_MASK_ERASE, BTN_MASK_DISPLAY, },
+    { BTN_ROTATION, BTN_SPOT,      BTN_DRAW_MASK,   BTN_ERASE_MASK, BTN_DISPLAY_MASK, },
     { BTN_BAL_PICK, BTN_ADJ,       BTN_NOT_USED,    BTN_NOT_USED,   BTN_NOT_USED      }
 };
 byte rowPins[ROWS] = {PIN_KEYPAD_ROW1, PIN_KEYPAD_ROW2, PIN_KEYPAD_ROW3, PIN_KEYPAD_ROW4, PIN_KEYPAD_ROW5, PIN_KEYPAD_ROW6};

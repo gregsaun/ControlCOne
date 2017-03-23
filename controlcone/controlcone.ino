@@ -185,27 +185,35 @@ void loop() {
                 break;
             case BTN_AUTO:
                 Serial.println("auto adjustments");
+                send_shortcut(ADJ_AUTO, NO_ADD_SUB);
                 break;
             case BTN_RESET:
+                send_shortcut(ADJ_RESET, NO_ADD_SUB);
                 Serial.println("reset adjustments");
                 break;
             case BTN_STAR1:
                 Serial.println("*");
+                send_shortcut(ADJ_STAR1, NO_ADD_SUB);
                 break;        
             case BTN_STAR2:
                 Serial.println("**");
+                send_shortcut(ADJ_STAR2, NO_ADD_SUB);
                 break;        
             case BTN_STAR3:
                 Serial.println("***");
+                send_shortcut(ADJ_STAR3, NO_ADD_SUB);
                 break;        
             case BTN_STAR4:
                 Serial.println("****");
+                send_shortcut(ADJ_STAR4, NO_ADD_SUB);
                 break;        
             case BTN_STAR5:
                 Serial.println("*****");
+                send_shortcut(ADJ_STAR5, NO_ADD_SUB);
                 break;        
             case BTN_STAR_TOGGLE:
                 Serial.println("toggle between stars and colors");
+                send_shortcut(ADJ_STAR_TOGGLE, NO_ADD_SUB);
                 break;  
             case BTN_PAN:
                 Serial.println("pan");
@@ -217,24 +225,31 @@ void loop() {
                 break;
             case BTN_ROTATION:
                 Serial.println("rotation");
+                send_shortcut(ADJ_ROTATION, NO_ADD_SUB);
                 break;  
             case BTN_SPOT:
                 Serial.println("spot");
+                send_shortcut(ADJ_SPOT, NO_ADD_SUB);
                 break;
-            case BTN_MASK_DRAW:
+            case BTN_DRAW_MASK:
                 Serial.println("draw mask");
+                send_shortcut(ADJ_DRAW_MASK, NO_ADD_SUB);
                 break;
-            case BTN_MASK_ERASE:
+            case BTN_ERASE_MASK:
                 Serial.println("erase mask");
+                send_shortcut(ADJ_ERASE_MASK, NO_ADD_SUB);
                 break;
-            case BTN_MASK_DISPLAY:
+            case BTN_DISPLAY_MASK:
                 Serial.println("display mask");
+                send_shortcut(ADJ_DISPLAY_MASK, NO_ADD_SUB);
                 break;
             case BTN_BAL_PICK:
                 Serial.println("white balance pick");
+                send_shortcut(ADJ_W_BAL_PICK, NO_ADD_SUB);
                 break;
             case BTN_ADJ:
                 Serial.println("copy paste adjustments");
+                send_shortcut(ADJ_COPY_PASTE, NO_ADD_SUB);
                 break;
             default:
                 break;
