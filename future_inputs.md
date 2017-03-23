@@ -23,12 +23,13 @@ Automatic Adjustment
 
 stars / colors
 ==============
-1. ***** | green
-2. ****  | yellow
-3. ***   | blue
-4. **    | violet
-5. *     | red
-6. Switch to toggle between stars or colors
+1. *****   | green
+2. ****    | yellow
+3. ***     | blue
+4. **      | violet
+5. *       | red
+6. clear * | clear color
+7. Switch to toggle between stars or colors
 
 Mask brush
 ==========
