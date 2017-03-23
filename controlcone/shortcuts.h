@@ -53,9 +53,9 @@ const shortcut_t ADJ_STAR_CLEAR   = { 0, KEY_0,                                 
 const shortcut_t ADJ_STAR1        = { 0, KEY_1,                        // *
                                       MODIFIERKEY_GUI, KEYPAD_MINUS }; // red
 const shortcut_t ADJ_STAR2        = { 0, KEY_2,                                                           // **
-                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F11 };  // violet
+                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F10 };  // violet
 const shortcut_t ADJ_STAR3        = { 0, KEY_3,                                                           // ***
-                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F10 };  // blue
+                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F11 };  // blue
 const shortcut_t ADJ_STAR4        = { 0, KEY_4,                        // ****
                                       0, KEYPAD_ASTERIX };             // yellow
 const shortcut_t ADJ_STAR5        = { 0, KEY_5,                        // *****
