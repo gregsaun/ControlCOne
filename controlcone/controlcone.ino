@@ -27,8 +27,10 @@
 ******************************************************************************/
 
 
-#include "pins.h"
+#include <Keypad.h>
+#include "controlcone.h"
 #include "shortcuts.h"
+
 
 // Image adjustments
 imageAdjustments adjustment = NO_ADJ;
@@ -36,29 +38,38 @@ imageAdjustments adjustment = NO_ADJ;
 // Rotary encoder variable (used by ISR)
 volatile int val_encoder = 0;
 
-// Used to get current and passed time for all delays
+// Global variables for buttons (keypad)
+Keypad keypad = Keypad( makeKeymap(btns), rowPins, colPins, ROWS, COLS );
+char oldBtn = BTN_NOT_USED;  // keep button pressed in memory in case of holding it
+unsigned long timeBtnHoldRepeat = 0;
+
+// Keep track of time for state machine
 unsigned long currentMillis = 0;
-
-// Delay before releasing shortcut keys
-unsigned long lastKeyboardReleased = 0;
-const int intervalReleaseKeys = 30;
-boolean shortcutPressed = false;
-
-// Debouncing of buttons
-unsigned long lastDebounceTime = 0;
-const int debounceDelay = 100;
 
 
 /* 
  * Setup the Arduino Micro Board 
  */
 void setup() {
-    for (byte pin = 2; pin <= 11; pin++) {
-        pinMode(pin, INPUT_PULLUP);
-    }
-    //Keyboard.begin();
+//    for (byte pin = 2; pin <= 11; pin++) {
+//        pinMode(pin, INPUT_PULLUP);
+//    }
+
+    // Keyboard
+    Keyboard.begin();
+
+    // Encoders
+    pinMode(PIN_ENC_SA, INPUT_PULLUP);
+    pinMode(PIN_ENC_SB, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(PIN_ENC_SA), isr_encoder_sa, FALLING);
     attachInterrupt(digitalPinToInterrupt(PIN_ENC_SB), isr_encoder_sb, FALLING);
+
+    // Buttons
+    keypad.setHoldTime(BTN_HOLD_TIME);
+    keypad.setDebounceTime(BTN_DEBOUNCE);
+
+    // For debugging
+    Serial.begin(9600);
 }
 
 
@@ -148,10 +159,13 @@ void send_shortcut(byte adjustment, byte add_sub) {
                 break;
         }
     }
+    // Send keys and modifiers pressed
     Keyboard.send_now();
 
-    // Confim releasing of keys
-    shortcutPressed = true;
+    // Release all keys
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
 }
 
 
@@ -160,34 +174,136 @@ void send_shortcut(byte adjustment, byte add_sub) {
  */
 void loop() {
 
-    // capture the current time
+    // Capture the current time
     currentMillis = millis();
 
-    // Image adjustments
-    if (digitalRead(PIN_BTN_EXPOSURE) == LOW) {
-        adjustment = ADJ_EXPOSURE;
-    } else if (digitalRead(PIN_BTN_CONTRAST) == LOW) {
-        adjustment = ADJ_CONTRAST;
-    } else if (digitalRead(PIN_BTN_SATURATION) == LOW) {
-        adjustment = ADJ_SATURATION;
-    } else if (digitalRead(PIN_BTN_SHADOW) == LOW) {
-        adjustment = ADJ_SHADOW;
-    } else if (digitalRead(PIN_BTN_HIGHLIGHT) == LOW) {
-        adjustment = ADJ_HIGHLIGHT;
-    } else if (digitalRead(PIN_BTN_CLARITY) == LOW) {
-        adjustment = ADJ_CLARITY;
+    // Get button value if pressed
+    if (char btn = keypad.getKey()) {
+
+        // Keep button pressed in memory because if holded
+        // it will be lost when main loop start again
+        // (because keypad.getKey() will not return a key)
+        oldBtn = btn;
+        
+        Serial.print("button pressed: ");
+        switch (btn) {
+            case BTN_EXPO:
+                Serial.println("expo");
+                adjustment = ADJ_EXPOSURE;
+                break;
+            case BTN_CONTRASTE:
+                Serial.println("contrast");
+                adjustment = ADJ_CONTRAST;
+                break;
+            case BTN_SAT:
+                Serial.println("sat");
+                adjustment = ADJ_SATURATION;
+                break;
+            case BTN_SHADOW:
+                adjustment = ADJ_SHADOW;
+                Serial.println("shadow");
+                break;
+            case BTN_HL:
+                adjustment = ADJ_HIGHLIGHT;
+                Serial.println("highlight");
+                break;
+            case BTN_CLARITY:
+                adjustment = ADJ_CLARITY;
+                Serial.println("clarity");
+                break;
+            case BTN_BAL_TEMP:
+                adjustment = ADJ_BALANCE_KELVIN;
+                Serial.println("white balance kelvin");
+                break;
+            case BTN_BAL_TINT:
+                adjustment = ADJ_BALANCE_TINT;
+                Serial.println("white balance tint");
+                break;
+            case BTN_ADD:
+                Serial.println("+");
+                send_shortcut(adjustment, ADD);
+                break;  
+            case BTN_SUB:
+                Serial.println("-");
+                send_shortcut(adjustment, SUB);
+                break;
+            case BTN_AUTO:
+                Serial.println("auto adjustments");
+                break;
+            case BTN_RESET:
+                Serial.println("reset adjustments");
+                break;
+            case BTN_STAR1:
+                Serial.println("*");
+                break;        
+            case BTN_STAR2:
+                Serial.println("**");
+                break;        
+            case BTN_STAR3:
+                Serial.println("***");
+                break;        
+            case BTN_STAR4:
+                Serial.println("****");
+                break;        
+            case BTN_STAR5:
+                Serial.println("*****");
+                break;        
+            case BTN_STAR_TOGGLE:
+                Serial.println("toggle between stars and colors");
+                break;  
+            case BTN_PAN:
+                Serial.println("pan");
+                break;
+            case BTN_CROP:
+                Serial.println("crop");
+                break;
+            case BTN_ROTATION:
+                Serial.println("rotation");
+                break;  
+            case BTN_SPOT:
+                Serial.println("spot");
+                break;
+            case BTN_MASK_DRAW:
+                Serial.println("draw mask");
+                break;
+            case BTN_MASK_ERASE:
+                Serial.println("erase mask");
+                break;
+            case BTN_MASK_DISPLAY:
+                Serial.println("display mask");
+                break;
+            case BTN_BAL_PICK:
+                Serial.println("white balance pick");
+                break;
+            case BTN_ADJ:
+                Serial.println("copy paste adjustments");
+                break;
+        }
     }
 
-    // ADD-SUB via button
-    if (digitalRead(PIN_BTN_ADD) == LOW) {
-        send_shortcut(adjustment, ADD);
-        delay(150);  //debounce for button only
-    } else if (digitalRead(PIN_BTN_SUB) == LOW) {
-        send_shortcut(adjustment, SUB);
-        delay(150);  //debounce for button only
+
+    // Check if ADD or SUB button are hold to continue
+    // adding or substracting adjustement value
+    if (keypad.getState() == HOLD
+        && (oldBtn == BTN_ADD || oldBtn == BTN_SUB)
+        && currentMillis-timeBtnHoldRepeat>=BTN_HOLD_REPEAT_DELAY) {
+          
+        switch (oldBtn) {
+            case BTN_ADD:
+                Serial.println("button hold   : +");
+                send_shortcut(adjustment, ADD);
+                break;  
+            case BTN_SUB:
+                Serial.println("button hold   : -");
+                send_shortcut(adjustment, SUB);
+                break;
+        }
+
+        timeBtnHoldRepeat = currentMillis;
+    }
 
     // ADD-SUB via rotary encoder
-    } if (val_encoder > 0) {
+    if (val_encoder > 0) {
         for (int i = 0; i < val_encoder; i++) {
             send_shortcut(adjustment, ADD);
         }
@@ -198,14 +314,5 @@ void loop() {
     }
     val_encoder = 0;
 
-
-    // Release all keyboard keys when it's time to do it
-    if (shortcutPressed && currentMillis - lastKeyboardReleased >= intervalReleaseKeys) {
-        Keyboard.set_modifier(0);
-        Keyboard.set_key1(0);
-        Keyboard.send_now();
-        lastKeyboardReleased = currentMillis;
-        shortcutPressed = false;
-    }
 }
 
