@@ -191,10 +191,14 @@ void loop() {
                 send_shortcut(ADJ_RESET, NO_ADD_SUB);
                 Serial.println("reset adjustments");
                 break;
+            case BTN_STAR_CLEAR:
+                Serial.println("no *");
+                send_shortcut(ADJ_STAR_CLEAR, NO_ADD_SUB);
+                break;
             case BTN_STAR1:
                 Serial.println("*");
                 send_shortcut(ADJ_STAR1, NO_ADD_SUB);
-                break;        
+                break;
             case BTN_STAR2:
                 Serial.println("**");
                 send_shortcut(ADJ_STAR2, NO_ADD_SUB);
