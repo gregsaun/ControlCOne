@@ -1,34 +1,16 @@
 #include "pins.h"
 
-/*
- * All image adjustments that can be applied via this device.
- * After an adjustment has been selected we can increase or
- * decrease it's value. For example, we click "contrast"
- * adjustment and then "add" to increase the contrast.
- */
-enum imageAdjustments {
-    NO_ADJ,
-    ADJ_EXPOSURE,
-    ADJ_CONTRAST,
-    ADJ_SATURATION,
-    ADJ_SHADOW,
-    ADJ_HIGHLIGHT,
-    ADJ_CLARITY,
-    ADJ_W_BAL_TEMP,
-    ADJ_W_BAL_TINT,
-    ADJ_PAN,
-    ADJ_CROP
-};
-
 
 /*
  * An adjustement has to be increased or decreased
  * to be applied to the image (like contrast increase or
  * contrast decrease)
  */
-const byte NO_ADD_SUB = 0;
-const byte ADD = 1;
-const byte SUB = 2;
+enum ADD_SUB {
+    ADD,
+    SUB,
+    NO_ADD_SUB,
+};
 
 
 /*

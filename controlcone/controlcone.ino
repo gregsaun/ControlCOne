@@ -33,7 +33,8 @@
 
 
 // Image adjustments
-imageAdjustments adjustment = NO_ADJ;
+//imageAdjustments adjustment = NO_ADJ;
+shortcut_t adj_shortcut = NO_ADJ;
 
 // Rotary encoder variable (used by ISR)
 volatile int val_encoder = 0;
@@ -104,99 +105,15 @@ void isr_encoder_sb() {
  *  int adjustment: image adjustment used like ADJ_EXPOSURE or ADJ_CONTRAST
  *  byte add_sub: ADD or SUB the mode's value
  */
-void send_shortcut(byte adjustment, byte add_sub) {
+void send_shortcut(shortcut_t adj_shortcut, byte add_sub) {
     
     // Press keys increase or decrease shortcut according to adjustment
-    if (add_sub == ADD) {
-        switch (adjustment) {
-            case ADJ_EXPOSURE:
-                Keyboard.set_modifier(MODIF_EXPOSURE);
-                Keyboard.set_key1((byte) KEY_EXPOSURE_ADD);
-                break;
-            case ADJ_CONTRAST:
-                Keyboard.set_modifier(MODIF_CONTRAST);
-                Keyboard.set_key1((byte) KEY_CONTRAST_ADD);
-                break;
-            case ADJ_SATURATION:
-                Keyboard.set_modifier(MODIF_SATURATION);
-                Keyboard.set_key1((byte) KEY_SATURATION_ADD);
-                break;
-            case ADJ_SHADOW:
-                Keyboard.set_modifier(MODIF_SHADOW);
-                Keyboard.set_key1((byte) KEY_SHADOW_ADD);
-                break;
-            case ADJ_HIGHLIGHT:
-                Keyboard.set_modifier(MODIF_HIGHLIGHT);
-                Keyboard.set_key1((byte) KEY_HIGHLIGHT_ADD);
-                break;
-            case ADJ_CLARITY:
-                Keyboard.set_modifier(MODIF_CLARITY);
-                Keyboard.set_key1((byte) KEY_CLARITY_ADD);
-                break;
-            case ADJ_W_BAL_TEMP:
-                Keyboard.set_modifier(MODIF_W_BAL_TEMP);
-                Keyboard.set_key1((byte) KEY_W_BAL_TEMP_ADD);
-                break;
-            case ADJ_W_BAL_TINT:
-                Keyboard.set_modifier(MODIF_W_BAL_TINT);
-                Keyboard.set_key1((byte) KEY_W_BAL_TINT_ADD);
-                break;
-            default:
-                adjustment = NO_ADJ;
-                break;
-        }
-    } else if (add_sub == SUB) {
-        switch (adjustment) {
-            case ADJ_EXPOSURE:
-                Keyboard.set_modifier(MODIF_EXPOSURE);
-                Keyboard.set_key1((byte) KEY_EXPOSURE_SUB);
-                break;
-            case ADJ_CONTRAST:
-                Keyboard.set_modifier(MODIF_CONTRAST);
-                Keyboard.set_key1((byte) KEY_CONTRAST_SUB);
-                break;
-            case ADJ_SATURATION:
-                Keyboard.set_modifier(MODIF_SATURATION);
-                Keyboard.set_key1((byte) KEY_SATURATION_SUB);
-                break;
-            case ADJ_SHADOW:
-                Keyboard.set_modifier(MODIF_SHADOW);
-                Keyboard.set_key1((byte) KEY_SHADOW_SUB);
-                break;
-            case ADJ_HIGHLIGHT:
-                Keyboard.set_modifier(MODIF_HIGHLIGHT);
-                Keyboard.set_key1((byte) KEY_HIGHLIGHT_SUB);
-                break;
-            case ADJ_CLARITY:
-                Keyboard.set_modifier(MODIF_CLARITY);
-                Keyboard.set_key1((byte) KEY_CLARITY_SUB);
-                break;
-            case ADJ_W_BAL_TEMP:
-                Keyboard.set_modifier(MODIF_W_BAL_TEMP);
-                Keyboard.set_key1((byte) KEY_W_BAL_TEMP_SUB);
-                break;
-            case ADJ_W_BAL_TINT:
-                Keyboard.set_modifier(MODIF_W_BAL_TINT);
-                Keyboard.set_key1((byte) KEY_W_BAL_TINT_SUB);
-                break;
-            default:
-                adjustment = NO_ADJ;
-                break;
-        }
-    } else {
-        switch (adjustment) {
-            case ADJ_PAN:
-                Keyboard.set_modifier(MODIF_PAN);
-                Keyboard.set_key1((byte) KEY_PAN);
-                break;
-            case ADJ_CROP:
-                Keyboard.set_modifier(MODIF_CROP);
-                Keyboard.set_key1((byte) KEY_CROP);
-                break;
-            default:
-                adjustment = NO_ADJ;
-                break;
-        }
+    if (add_sub == SUB) {
+        Keyboard.set_modifier(adj_shortcut.modifier2);
+        Keyboard.set_key1((byte) adj_shortcut.key2);
+    } else {    // add_sub == ADD || add_sub == NO_ADD_SUB
+        Keyboard.set_modifier(adj_shortcut.modifier1);
+        Keyboard.set_key1((byte) adj_shortcut.key1);
     }
     
     // Send modifiers and keys together
@@ -229,43 +146,43 @@ void loop() {
         switch (btn) {
             case BTN_EXPO:
                 Serial.println("expo");
-                adjustment = ADJ_EXPOSURE;
+                adj_shortcut = ADJ_EXPOSURE;
                 break;
             case BTN_CONTRAST:
                 Serial.println("contrast");
-                adjustment = ADJ_CONTRAST;
+                adj_shortcut = ADJ_CONTRAST;
                 break;
             case BTN_SAT:
                 Serial.println("sat");
-                adjustment = ADJ_SATURATION;
+                adj_shortcut = ADJ_SATURATION;
                 break;
             case BTN_SHADOW:
-                adjustment = ADJ_SHADOW;
+                adj_shortcut = ADJ_SHADOW;
                 Serial.println("shadow");
                 break;
             case BTN_HL:
-                adjustment = ADJ_HIGHLIGHT;
+                adj_shortcut = ADJ_HIGHLIGHT;
                 Serial.println("highlight");
                 break;
             case BTN_CLARITY:
-                adjustment = ADJ_CLARITY;
+                adj_shortcut = ADJ_CLARITY;
                 Serial.println("clarity");
                 break;
             case BTN_BAL_TEMP:
-                adjustment = ADJ_W_BAL_TEMP;
+                adj_shortcut = ADJ_W_BAL_TEMP;
                 Serial.println("white balance kelvin");
                 break;
             case BTN_BAL_TINT:
-                adjustment = ADJ_W_BAL_TINT;
+                adj_shortcut = ADJ_W_BAL_TINT;
                 Serial.println("white balance tint");
                 break;
             case BTN_ADD:
                 Serial.println("+");
-                send_shortcut(adjustment, ADD);
+                send_shortcut(adj_shortcut, ADD);
                 break;  
             case BTN_SUB:
                 Serial.println("-");
-                send_shortcut(adjustment, SUB);
+                send_shortcut(adj_shortcut, SUB);
                 break;
             case BTN_AUTO:
                 Serial.println("auto adjustments");
@@ -335,11 +252,11 @@ void loop() {
         switch (oldBtn) {
             case BTN_ADD:
                 Serial.println("button hold   : +");
-                send_shortcut(adjustment, ADD);
+                send_shortcut(adj_shortcut, ADD);
                 break;  
             case BTN_SUB:
                 Serial.println("button hold   : -");
-                send_shortcut(adjustment, SUB);
+                send_shortcut(adj_shortcut, SUB);
                 break;
         }
 
@@ -349,11 +266,11 @@ void loop() {
     // ADD-SUB via rotary encoder
     if (val_encoder > 0) {
         for (int i = 0; i < val_encoder; i++) {
-            send_shortcut(adjustment, ADD);
+            send_shortcut(adj_shortcut, ADD);
         }
     } else if (val_encoder < 0) {
         for (int i = 0; i > val_encoder; i--) {
-            send_shortcut(adjustment, SUB);
+            send_shortcut(adj_shortcut, SUB);
         }
     }
     val_encoder = 0;
