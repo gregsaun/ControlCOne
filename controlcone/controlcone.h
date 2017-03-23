@@ -1,3 +1,5 @@
+#include "pins.h"
+
 /*
  * All image adjustments that can be applied via this device.
  * After an adjustment has been selected we can increase or
@@ -12,8 +14,10 @@ enum imageAdjustments {
     ADJ_SHADOW,
     ADJ_HIGHLIGHT,
     ADJ_CLARITY,
-    ADJ_BALANCE_KELVIN,
-    ADJ_BALANCE_TINT
+    ADJ_W_BAL_TEMP,
+    ADJ_W_BAL_TINT,
+    ADJ_PAN,
+    ADJ_CROP
 };
 
 
@@ -22,10 +26,10 @@ enum imageAdjustments {
  * to be applied to the image (like contrast increase or
  * contrast decrease)
  */
-const boolean ADD = true;
-const boolean SUB = false;
+const byte NO_ADD_SUB = 0;
+const byte ADD = 1;
+const byte SUB = 2;
 
-#include "pins.h"
 
 /*
  * Define character for each buttons of the matrice (keypad).
@@ -34,7 +38,7 @@ const boolean SUB = false;
 enum adjButtons : char {
     BTN_NOT_USED = 'a',
     BTN_EXPO,
-    BTN_CONTRASTE,
+    BTN_CONTRAST,
     BTN_SAT,
     BTN_SHADOW,
     BTN_HL,
@@ -69,7 +73,7 @@ enum adjButtons : char {
 const byte ROWS = 6;
 const byte COLS = 5;
 char btns[ROWS][COLS] = {
-    { BTN_EXPO,     BTN_CONTRASTE, BTN_SAT,         BTN_SHADOW,     BTN_HL,           },
+    { BTN_EXPO,     BTN_CONTRAST, BTN_SAT,         BTN_SHADOW,     BTN_HL,           },
     { BTN_CLARITY,  BTN_BAL_TEMP,  BTN_BAL_TINT,    BTN_ADD,        BTN_SUB,          },
     { BTN_AUTO,     BTN_RESET,     BTN_STAR1,       BTN_STAR2,      BTN_STAR3,        },
     { BTN_STAR4,    BTN_STAR5,     BTN_STAR_TOGGLE, BTN_PAN,        BTN_CROP,         },
