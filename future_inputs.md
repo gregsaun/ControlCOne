@@ -9,41 +9,47 @@ Modes
 7. White Balance Kelvin
 8. White Balance Tint
 
-Augmente / diminue
-==================
-1. bouton +
-2. bouton -
-3. encodeur SA (ISR)
-4. encodeur SB (ISR)
+Increase Decrease (modes)
+=========================
+1. button +
+2. button -
+3. encoder SA (ISR)
+4. encoder SB (ISR)
 
-Réglage auto
-============
-1. réglage auto de l'image
-2. reset de l'image
+Automatic Adjustment
+====================
+1. Auto
+2. Reset
 
-Etoiles / couleurs
-==================
-1. ***** | vert
-2. ****  | jaune
-3. ***   | bleu
+stars / colors
+==============
+1. ***** | green
+2. ****  | yellow
+3. ***   | blue
 4. **    | violet
-5. *     | rouge
-6. Un switch pour passer de couleur à étoile
+5. *     | red
+6. Switch to toggle between stars or colors
 
-Curseur
-=======
-1. Taille du curseur: encodeur SA (ISR)
-2. Taille du curseur: encodeur SB (ISR)
-3. Dureté du curseur: encodeur SA (ISR)
-4. Dureté du curseur: encodeur SB (ISR)
+Mask brush
+==========
+1. Brush size: encoder SA (ISR)
+2. Brush size: encoder SB (ISR)
+3. Brush hardness: encoder SA (ISR)
+4. Brush hardness: encoder SB (ISR)
 
-LCD
-===
-???
+Browse images
+=============
+1. Next image
+2. Previous image
 
-Pour personnalisation
-=====================
-1. bouton A
-2. bouton B
-3. bouton C
-4. bouton D
+C1 top toolbar buttons
+======================
+1. Pan
+2. Crop
+3. Rotation (each key press will toggle between straighten, freehand, left, right)
+4. Spot
+5. Draw mask
+6. Erase Mask
+7. Always display mask
+8. Pick white balance
+9. Copy/Paste adjustments (each key press will toggle adjustments between copy and paste)
