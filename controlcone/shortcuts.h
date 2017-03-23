@@ -1,22 +1,32 @@
 /*
+ * Represents an image adjustment shortcut.
  * 
+ * A shortcut is build using a modifier and a key. For example: For "Ctrl + Alt + F", 
+ * the modifier will be "Ctrl + Alt" and the key "F". If there is no modifier nor key,
+ * then value should be 0.
+ * 
+ * Some adjustment need to have two shortcuts: to increase and decrease a value, this
+ * is why we have two modifiers and keys per shortcut.
  */
 struct shortcut_t {
-    int modifier1;
-    int key1;
-    int modifier2;
-    int key2;
+    int modifier1;  // modifier for single shortcut adjustment or increase adjustement
+    int key1;       // key for single shortcut adjustment or increase adjustement
+    int modifier2;  // modifier for an adjustment with a decrease value
+    int key2;       // key for an adjustment with a decrease value
 };
 
 
 /*
- * All shortcuts modifiers used.
- * For example: For "Ctrl + Alt + F", the modifier will be "Ctrl + Alt" and the key "F"
- * If there is no modifier nor key, then value should be 0
+ * All shortcuts used for image adjustments.
+ * 
+ * A shortcut is build using a modifier and a key. For example: For "Ctrl + Alt + F", 
+ * the modifier will be "Ctrl + Alt" and the key "F".
+ *   - If there is no modifier nor key, then value should be 0.
+ *   - If you need multiple modifier (like Ctrl + Alt), then you must add "|" between
+ *     each of them, for example: modifier1 = MODIFIERKEY_CTRL | MODIFIERKEY_ALT
+ * 
  * All available keys are displayed in this page: https://www.pjrc.com/teensy/td_keyboard.html
  */
-
-
 const shortcut_t NO_ADJ         = { 0, 0, 0, 0 };
 const shortcut_t ADJ_EXPOSURE   = { MODIFIERKEY_ALT, KEYPAD_PLUS,
                                     MODIFIERKEY_ALT, KEYPAD_MINUS };

@@ -32,14 +32,13 @@
 #include "shortcuts.h"
 
 
-// Image adjustments
-//imageAdjustments adjustment = NO_ADJ;
+// Image adjustments' shortcut
 shortcut_t adj_shortcut = NO_ADJ;
 
 // Rotary encoder variable (used by ISR)
 volatile int val_encoder = 0;
 
-// Global variables for buttons (keypad)
+// Global variables for matrice of buttons (keypad)
 Keypad keypad = Keypad( makeKeymap(btns), rowPins, colPins, ROWS, COLS );
 char oldBtn = BTN_NOT_USED;  // keep button pressed in memory in case of holding it
 unsigned long timeBtnHoldRepeat = 0;
