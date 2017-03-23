@@ -1,32 +1,4 @@
 /*
- * All image adjustments that can be applied via this device.
- * After an adjustment has been selected we can increase or
- * decrease it's value. For example, we click "contrast"
- * adjustment and then "add" to increase the contrast.
- */
-enum imageAdjustments {
-    NO_ADJ,
-    ADJ_EXPOSURE,
-    ADJ_CONTRAST,
-    ADJ_SATURATION,
-    ADJ_SHADOW,
-    ADJ_HIGHLIGHT,
-    ADJ_CLARITY,
-    ADJ_BALANCE_KELVIN,
-    ADJ_BALANCE_TINT
-};
-
-
-/*
- * An adjustement has to be increased or decreased
- * to be applied to the image (like contrast increase or
- * contrast decrease)
- */
-const boolean ADD = true;
-const boolean SUB = false;
-
-
-/*
  * All shortcuts used. We use the same keys for
  * the begining of all shortcuts
  */
