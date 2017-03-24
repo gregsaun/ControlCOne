@@ -6,11 +6,10 @@
  * to be applied to the image (like contrast increase or
  * contrast decrease)
  */
-enum ADD_SUB {
-    ADD,
-    SUB,
-    NO_ADD_SUB,
-};
+const byte ADD = true;
+const byte SUB = false;
+const byte STAR = ADD;
+const byte COLOR = SUB;
 
 
 /*
