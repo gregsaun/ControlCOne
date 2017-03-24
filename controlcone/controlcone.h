@@ -47,6 +47,8 @@ enum adjButtons : char {
     BTN_DISPLAY_MASK,
     BTN_BAL_PICK,
     BTN_ADJ,  // toggle adjustments between copy and paste
+    BTN_UNDO,
+    BTN_REDO
 };
 
 
@@ -61,10 +63,12 @@ char btns[ROWS][COLS] = {
     { BTN_AUTO,         BTN_RESET,    BTN_STAR_CLEAR, BTN_STAR1,       BTN_STAR2,      },
     { BTN_STAR3,        BTN_STAR4,    BTN_STAR5,      BTN_STAR_TOGGLE, BTN_PAN,        },
     { BTN_CROP,         BTN_ROTATION, BTN_SPOT,       BTN_DRAW_MASK,   BTN_ERASE_MASK, },
-    { BTN_DISPLAY_MASK, BTN_BAL_PICK, BTN_ADJ,        BTN_NOT_USED,    BTN_NOT_USED,   }
+    { BTN_DISPLAY_MASK, BTN_BAL_PICK, BTN_ADJ,        BTN_UNDO,        BTN_REDO,       }
 };
 byte rowPins[ROWS] = {PIN_KEYPAD_ROW1, PIN_KEYPAD_ROW2, PIN_KEYPAD_ROW3, PIN_KEYPAD_ROW4, PIN_KEYPAD_ROW5, PIN_KEYPAD_ROW6};
 byte colPins[COLS] = {PIN_KEYPAD_COL1, PIN_KEYPAD_COL2, PIN_KEYPAD_COL3, PIN_KEYPAD_COL4, PIN_KEYPAD_COL5};
 const unsigned int BTN_DEBOUNCE = 50;    // ms (default 10ms)
 const unsigned int BTN_HOLD_TIME = 500;  // ms (default 500ms)
 const unsigned int BTN_HOLD_REPEAT_DELAY = 100;  // ms
+
+

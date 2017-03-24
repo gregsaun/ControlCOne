@@ -48,25 +48,24 @@ const shortcut_t ADJ_AUTO         = { MODIFIERKEY_CTRL, KEY_L,
                                       0, 0 };
 const shortcut_t ADJ_RESET         = { MODIFIERKEY_CTRL, KEY_R,
                                       0, 0 };
-const shortcut_t ADJ_STAR_CLEAR   = { 0, KEY_0,                                                          // clear *
-                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F9 };  // clear color
-const shortcut_t ADJ_STAR1        = { 0, KEY_1,                        // *
+const shortcut_t ADJ_STAR_COLOR_CLEAR  = { 0, KEY_0,                                                          // clear *
+                                           MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F9 };  // clear color
+const shortcut_t ADJ_1STAR_RED    = { 0, KEY_1,                        // *
                                       MODIFIERKEY_GUI, KEYPAD_MINUS }; // red
-const shortcut_t ADJ_STAR2        = { 0, KEY_2,                                                           // **
-                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F10 };  // violet
-const shortcut_t ADJ_STAR3        = { 0, KEY_3,                                                           // ***
-                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F11 };  // blue
-const shortcut_t ADJ_STAR4        = { 0, KEY_4,                        // ****
-                                      0, KEYPAD_ASTERIX };             // yellow
-const shortcut_t ADJ_STAR5        = { 0, KEY_5,                        // *****
-                                      MODIFIERKEY_GUI, KEYPAD_PLUS };  // green
-const shortcut_t ADJ_STAR_TOGGLE  = { 0, 0,
-                                      0, 0 };
+const shortcut_t ADJ_2STARS_BLUE = { 0, KEY_2,                                                           // **
+                                     MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F12 };  // blue
+const shortcut_t ADJ_3STARS_ORANGE = { 0, KEY_3,                                                           // ***
+                                       MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F10 };  // orange
+const shortcut_t ADJ_4STARS_YELLOW = { 0, KEY_4,                        // ****
+                                       0, KEYPAD_ASTERIX };             // yellow
+const shortcut_t ADJ_5STARS_GREEN  = { 0, KEY_5,                        // *****
+                                       MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F11 };  // green
+//const shortcut_t ADJ_STAR_COLOR_TOGGLE  = // no shortcut, used to toggle between colors and stars
 const shortcut_t ADJ_PAN          = { 0, KEY_H,
                                       0, 0 };
 const shortcut_t ADJ_CROP         = { 0, KEY_C,
                                       0, 0 };
-const shortcut_t ADJ_ROTATION     = { 0, KEY_R,
+const shortcut_t ADJ_ROTATION     = { MODIFIERKEY_SHIFT, KEY_R,
                                       0, 0 };
 const shortcut_t ADJ_SPOT         = { 0, KEY_O,
                                       0, 0 };
@@ -78,11 +77,15 @@ const shortcut_t ADJ_DISPLAY_MASK = { 0, KEY_M,
                                       0, 0 };
 const shortcut_t ADJ_W_BAL_PICK   = { 0, KEY_W,
                                       0, 0 };
-const shortcut_t ADJ_COPY_PASTE   = { 0, KEY_A,
+const shortcut_t ADJ_COPY_PASTE   = { MODIFIERKEY_SHIFT, KEY_A,
                                       0, 0 };
-const shortcut_t ADJ_BRUSH_SIZE   = { MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F9,
-                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F10 };
-const shortcut_t ADJ_BRUSH_HARDNESS = { MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F11,
-                                        MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F12 };
+const shortcut_t ADJ_UNDO         = { MODIFIERKEY_CTRL, KEY_Z,
+                                      0, 0 };
+const shortcut_t ADJ_REDO         = { MODIFIERKEY_CTRL, KEY_Y,
+                                      0, 0 };
+const shortcut_t ADJ_BRUSH_SIZE   = { MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_HOME,
+                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_END };
+const shortcut_t ADJ_BRUSH_HARDNESS = { MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_PAGE_UP,
+                                        MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_PAGE_DOWN };
 
 

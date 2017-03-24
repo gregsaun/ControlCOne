@@ -51,6 +51,9 @@ Encoder encAddSub(PIN_ENC_ADDSUB_SA, PIN_ENC_ADDSUB_SB);
 Encoder encBrushSize(PIN_ENC_BRUSH_SIZE_SA, PIN_ENC_BRUSH_SIZE_SB);
 Encoder encBrushHardness(PIN_ENC_BRUSH_HARD_SA, PIN_ENC_BRUSH_HARD_SB);
 
+// Used to switch between stars and color image notation
+boolean isStarsMode = true;
+
 
 /* 
  * Setup the Arduino Micro Board 
@@ -157,36 +160,66 @@ void loop() {
                 send_shortcut(ADJ_AUTO, NO_ADD_SUB);
                 break;
             case BTN_RESET:
-                send_shortcut(ADJ_RESET, NO_ADD_SUB);
                 Serial.println("reset adjustments");
+                send_shortcut(ADJ_RESET, NO_ADD_SUB);
                 break;
             case BTN_STAR_CLEAR:
-                Serial.println("no *");
-                send_shortcut(ADJ_STAR_CLEAR, NO_ADD_SUB);
+                if (isStarsMode) {
+                    send_shortcut(ADJ_STAR_COLOR_CLEAR, ADD);
+                    Serial.println("no *");
+                } else {
+                    send_shortcut(ADJ_STAR_COLOR_CLEAR, SUB);
+                    Serial.println("no color");
+                }
                 break;
             case BTN_STAR1:
-                Serial.println("*");
-                send_shortcut(ADJ_STAR1, NO_ADD_SUB);
+                if (isStarsMode) {
+                    Serial.println("*");
+                    send_shortcut(ADJ_1STAR_RED, ADD);
+                } else {
+                    Serial.println("red");
+                    send_shortcut(ADJ_1STAR_RED, SUB);
+                }
                 break;
             case BTN_STAR2:
-                Serial.println("**");
-                send_shortcut(ADJ_STAR2, NO_ADD_SUB);
+                if (isStarsMode) {
+                    Serial.println("**");
+                    send_shortcut(ADJ_2STARS_BLUE, ADD);
+                } else {
+                    Serial.println("blue");
+                    send_shortcut(ADJ_2STARS_BLUE, SUB);
+                }
                 break;        
             case BTN_STAR3:
-                Serial.println("***");
-                send_shortcut(ADJ_STAR3, NO_ADD_SUB);
+                if (isStarsMode) {
+                    Serial.println("***");
+                    send_shortcut(ADJ_3STARS_ORANGE, ADD);
+                } else {
+                    Serial.println("orange");
+                    send_shortcut(ADJ_3STARS_ORANGE, SUB);
+                }
                 break;        
             case BTN_STAR4:
-                Serial.println("****");
-                send_shortcut(ADJ_STAR4, NO_ADD_SUB);
+                if (isStarsMode) {
+                    Serial.println("****");
+                    send_shortcut(ADJ_4STARS_YELLOW, ADD);
+                } else {
+                    Serial.println("yellow");
+                    send_shortcut(ADJ_4STARS_YELLOW, SUB);
+                }
                 break;        
             case BTN_STAR5:
-                Serial.println("*****");
-                send_shortcut(ADJ_STAR5, NO_ADD_SUB);
+                if (isStarsMode) {
+                    Serial.println("*****");
+                    send_shortcut(ADJ_5STARS_GREEN, ADD);
+                } else {
+                    Serial.println("green");
+                    send_shortcut(ADJ_5STARS_GREEN, SUB);
+                }
                 break;        
             case BTN_STAR_TOGGLE:
                 Serial.println("toggle between stars and colors");
-                send_shortcut(ADJ_STAR_TOGGLE, NO_ADD_SUB);
+                isStarsMode = !isStarsMode;
                 break;  
             case BTN_PAN:
                 Serial.println("pan");
@@ -223,6 +256,14 @@ void loop() {
             case BTN_ADJ:
                 Serial.println("copy paste adjustments");
                 send_shortcut(ADJ_COPY_PASTE, NO_ADD_SUB);
+                break;
+            case BTN_UNDO:
+                Serial.println("copy paste adjustments");
+                send_shortcut(ADJ_UNDO, NO_ADD_SUB);
+                break;
+            case BTN_REDO:
+                Serial.println("copy paste adjustments");
+                send_shortcut(ADJ_REDO, NO_ADD_SUB);
                 break;
             default:
                 break;
