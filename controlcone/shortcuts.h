@@ -80,5 +80,9 @@ const shortcut_t ADJ_W_BAL_PICK   = { 0, KEY_W,
                                       0, 0 };
 const shortcut_t ADJ_COPY_PASTE   = { 0, KEY_A,
                                       0, 0 };
+const shortcut_t ADJ_BRUSH_SIZE   = { MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F9,
+                                      MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F10 };
+const shortcut_t ADJ_BRUSH_HARDNESS = { MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F11,
+                                        MODIFIERKEY_CTRL | MODIFIERKEY_ALT | MODIFIERKEY_SHIFT, KEY_F12 };
 
 

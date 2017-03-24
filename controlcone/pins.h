@@ -19,6 +19,10 @@ const byte PIN_KEYPAD_COL5 = 12;
  * or decrease an adjustment.
  * Both pins need to be connected to an interrupt
  */
-const byte PIN_ENC_SA = 31;  // ISR
-const byte PIN_ENC_SB = 32;  // ISR
+const byte PIN_ENC_ADDSUB_SA = 27;
+const byte PIN_ENC_ADDSUB_SB = 28;
+const byte PIN_ENC_BRUSH_SIZE_SA = 29;
+const byte PIN_ENC_BRUSH_SIZE_SB = 30;
+const byte PIN_ENC_BRUSH_HARD_SA = 31;
+const byte PIN_ENC_BRUSH_HARD_SB = 32;
 

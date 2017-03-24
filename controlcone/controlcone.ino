@@ -47,7 +47,9 @@ unsigned long timeBtnHoldRepeat = 0;
 unsigned long currentMillis = 0;
 
 // Encoders
-Encoder encoderAddSub(PIN_ENC_SA, PIN_ENC_SB);
+Encoder encAddSub(PIN_ENC_ADDSUB_SA, PIN_ENC_ADDSUB_SB);
+Encoder encBrushSize(PIN_ENC_BRUSH_SIZE_SA, PIN_ENC_BRUSH_SIZE_SB);
+Encoder encBrushHardness(PIN_ENC_BRUSH_HARD_SA, PIN_ENC_BRUSH_HARD_SB);
 
 
 /* 
@@ -248,17 +250,51 @@ void loop() {
         timeBtnHoldRepeat = currentMillis;
     }
 
-    // ADD-SUB via rotary encoder
-    int valEncoderAddSub = encoderAddSub.read() / 4;
-    if (valEncoderAddSub > 0) {
-        encoderAddSub.write(0);
-        for (int i = 0; i < valEncoderAddSub; i++) {
+    // Adjustment increase/decrease via rotary encoder
+    int valEncAddSub = encAddSub.read() / 4;
+    if (valEncAddSub > 0) {
+        encAddSub.write(0);
+        for (int i = 0; i < valEncAddSub; i++) {
+            Serial.println("Encoder ADD-SUB : +");
             send_shortcut(adj_shortcut, ADD);
         }
-    } else if (valEncoderAddSub < 0) {
-        encoderAddSub.write(0);
-        for (int i = 0; i > valEncoderAddSub; i--) {
+    } else if (valEncAddSub < 0) {
+        encAddSub.write(0);
+        for (int i = 0; i > valEncAddSub; i--) {
+            Serial.println("Encoder ADD-SUB : -");
             send_shortcut(adj_shortcut, SUB);
+        }
+    }
+
+    // Brush size via rotary encoder
+    int valEncBrushSize = encBrushSize.read() / 4;
+    if (valEncBrushSize > 0) {
+        encBrushSize.write(0);
+        for (int i = 0; i < valEncBrushSize; i++) {
+            Serial.println("Encoder BR SIZE : +");
+            send_shortcut(ADJ_BRUSH_SIZE, ADD);
+        }
+    } else if (valEncBrushSize < 0) {
+        encBrushSize.write(0);
+        for (int i = 0; i > valEncBrushSize; i--) {
+            Serial.println("Encoder BR SIZE : -");
+            send_shortcut(ADJ_BRUSH_SIZE, SUB);
+        }
+    }
+
+    // Brush size via rotary encoder
+    int valEncBrushHardness = encBrushHardness.read() / 4;
+    if (valEncBrushHardness > 0) {
+        encBrushHardness.write(0);
+        for (int i = 0; i < valEncBrushHardness; i++) {
+            Serial.println("Encoder BR HARD : +");
+            send_shortcut(ADJ_BRUSH_HARDNESS, ADD);
+        }
+    } else if (valEncBrushHardness < 0) {
+        encBrushHardness.write(0);
+        for (int i = 0; i > valEncBrushHardness; i--) {
+            Serial.println("Encoder BR HARD : -");
+            send_shortcut(ADJ_BRUSH_HARDNESS, SUB);
         }
     }
 
