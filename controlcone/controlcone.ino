@@ -20,14 +20,17 @@
 *   - Breadboard
 * 
 * Ressources :
-*   - Arduino : https://www.arduino.cc
-*   - Teensy : https://www.pjrc.com
-*   - Phase One : https://www.phaseone.com
+*   - Arduino     : https://www.arduino.cc
+*   - Teensy      : https://www.pjrc.com
+*   - Phase One   : https://www.phaseone.com
+*   - Keypad lib  : https://www.pjrc.com/teensy/td_libs_Keypad.html
+*   - Encoder lib : https://www.pjrc.com/teensy/td_libs_Encoder.html
 *
 ******************************************************************************/
 
 
 #include <Keypad.h>
+#include <Encoder.h>
 #include "controlcone.h"
 #include "shortcuts.h"
 
@@ -35,10 +38,7 @@
 // Image adjustments' shortcut
 shortcut_t adj_shortcut = NO_ADJ;
 
-// Rotary encoder variable (used by ISR)
-volatile int val_encoder = 0;
-
-// Global variables for matrice of buttons (keypad)
+// Matrice of buttons (keypad)
 Keypad keypad = Keypad( makeKeymap(btns), rowPins, colPins, ROWS, COLS );
 char oldBtn = BTN_NOT_USED;  // keep button pressed in memory in case of holding it
 unsigned long timeBtnHoldRepeat = 0;
@@ -46,23 +46,16 @@ unsigned long timeBtnHoldRepeat = 0;
 // Keep track of time for state machine
 unsigned long currentMillis = 0;
 
+// Encoders
+Encoder encoderAddSub(PIN_ENC_SA, PIN_ENC_SB);
+
 
 /* 
  * Setup the Arduino Micro Board 
  */
 void setup() {
-//    for (byte pin = 2; pin <= 11; pin++) {
-//        pinMode(pin, INPUT_PULLUP);
-//    }
-
-    // Keyboard
+    // HID Keyboard
     Keyboard.begin();
-
-    // Encoders
-    pinMode(PIN_ENC_SA, INPUT_PULLUP);
-    pinMode(PIN_ENC_SB, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(PIN_ENC_SA), isr_encoder_sa, FALLING);
-    attachInterrupt(digitalPinToInterrupt(PIN_ENC_SB), isr_encoder_sb, FALLING);
 
     // Buttons
     keypad.setHoldTime(BTN_HOLD_TIME);
@@ -70,32 +63,6 @@ void setup() {
 
     // For debugging
     Serial.begin(9600);
-}
-
-
-/*
- * Interrupt for rotary encoder pin SA
- * Increase a global variable if CW rotation detected
- */
-void isr_encoder_sa() {
-  detachInterrupt(digitalPinToInterrupt(PIN_ENC_SB));
-  if (digitalRead(PIN_ENC_SA) == 0 && digitalRead(PIN_ENC_SB) == 1) {
-    val_encoder++;
-  }
-  attachInterrupt(digitalPinToInterrupt(PIN_ENC_SB), isr_encoder_sb, FALLING);
-}
-
-
-/* 
- * Interrupt for rotary encoder pin SB
- * Decrease a global variable if CCW rotation detected
- */
-void isr_encoder_sb() {
-  detachInterrupt(digitalPinToInterrupt(PIN_ENC_SA));
-  if (digitalRead(PIN_ENC_SA) == 1 && digitalRead(PIN_ENC_SB) == 0) {
-    val_encoder--;
-  }
-  attachInterrupt(digitalPinToInterrupt(PIN_ENC_SA), isr_encoder_sa, FALLING);
 }
 
 
@@ -282,16 +249,18 @@ void loop() {
     }
 
     // ADD-SUB via rotary encoder
-    if (val_encoder > 0) {
-        for (int i = 0; i < val_encoder; i++) {
+    int valEncoderAddSub = encoderAddSub.read() / 4;
+    if (valEncoderAddSub > 0) {
+        encoderAddSub.write(0);
+        for (int i = 0; i < valEncoderAddSub; i++) {
             send_shortcut(adj_shortcut, ADD);
         }
-    } else if (val_encoder < 0) {
-        for (int i = 0; i > val_encoder; i--) {
+    } else if (valEncoderAddSub < 0) {
+        encoderAddSub.write(0);
+        for (int i = 0; i > valEncoderAddSub; i--) {
             send_shortcut(adj_shortcut, SUB);
         }
     }
-    val_encoder = 0;
 
 }
 

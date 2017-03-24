@@ -66,5 +66,5 @@ char btns[ROWS][COLS] = {
 byte rowPins[ROWS] = {PIN_KEYPAD_ROW1, PIN_KEYPAD_ROW2, PIN_KEYPAD_ROW3, PIN_KEYPAD_ROW4, PIN_KEYPAD_ROW5, PIN_KEYPAD_ROW6};
 byte colPins[COLS] = {PIN_KEYPAD_COL1, PIN_KEYPAD_COL2, PIN_KEYPAD_COL3, PIN_KEYPAD_COL4, PIN_KEYPAD_COL5};
 const unsigned int BTN_DEBOUNCE = 50;    // ms (default 10ms)
-const unsigned int BTN_HOLD_TIME = 600;  // ms (default 500ms)
+const unsigned int BTN_HOLD_TIME = 500;  // ms (default 500ms)
 const unsigned int BTN_HOLD_REPEAT_DELAY = 100;  // ms
