@@ -335,13 +335,15 @@ void loop() {
     int valEncBrushHardness = encBrushHardness.read() / 4;
     if (valEncBrushHardness > 0) {
         encBrushHardness.write(0);
-        for (int i = 0; i < valEncBrushHardness; i++) {
+        // send to times because increase is too small
+        for (int i = 0; i < 2*valEncBrushHardness; i++) {
             Serial.println("Encoder BR HARD : +");
             send_shortcut(ADJ_BRUSH_HARDNESS, ADD);
         }
     } else if (valEncBrushHardness < 0) {
         encBrushHardness.write(0);
-        for (int i = 0; i > valEncBrushHardness; i--) {
+        // send to times because decrease is too small
+        for (int i = 0; i > 2*valEncBrushHardness; i--) {
             Serial.println("Encoder BR HARD : -");
             send_shortcut(ADJ_BRUSH_HARDNESS, SUB);
         }
