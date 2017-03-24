@@ -66,7 +66,7 @@ void setup() {
     keypad.setDebounceTime(BTN_DEBOUNCE);
 
     // For debugging
-    Serial.begin(9600);
+    //Serial.begin(9600);
 }
 
 
@@ -121,156 +121,156 @@ void loop() {
         // (because keypad.getKey() will not return a key)
         oldBtn = btn;
         
-        Serial.print("button pressed: ");
+        //Serial.print("button pressed: ");
         switch (btn) {
             case BTN_EXPO:
-                Serial.println("expo");
+                //Serial.println("expo");
                 adj_shortcut = ADJ_EXPOSURE;
                 break;
             case BTN_CONTRAST:
-                Serial.println("contrast");
+                //Serial.println("contrast");
                 adj_shortcut = ADJ_CONTRAST;
                 break;
             case BTN_SAT:
-                Serial.println("sat");
+                //Serial.println("sat");
                 adj_shortcut = ADJ_SATURATION;
                 break;
             case BTN_SHADOW:
                 adj_shortcut = ADJ_SHADOW;
-                Serial.println("shadow");
+                //Serial.println("shadow");
                 break;
             case BTN_HL:
                 adj_shortcut = ADJ_HIGHLIGHT;
-                Serial.println("highlight");
+                //Serial.println("highlight");
                 break;
             case BTN_CLARITY:
-                Serial.println("clarity");
+                //Serial.println("clarity");
                 adj_shortcut = ADJ_CLARITY;
                 break;
             case BTN_BAL_TEMP:
-                Serial.println("white balance kelvin");
+                //Serial.println("white balance kelvin");
                 adj_shortcut = ADJ_W_BAL_TEMP;
                 break;
             case BTN_BAL_TINT:
                 adj_shortcut = ADJ_W_BAL_TINT;
-                Serial.println("white balance tint");
+                //Serial.println("white balance tint");
                 break;
             case BTN_ADD:
-                Serial.println("+");
+                //Serial.println("+");
                 send_shortcut(adj_shortcut, ADD);
                 break;  
             case BTN_SUB:
-                Serial.println("-");
+                //Serial.println("-");
                 send_shortcut(adj_shortcut, SUB);
                 break;
             case BTN_AUTO:
-                Serial.println("auto adjustments");
+                //Serial.println("auto adjustments");
                 send_shortcut(ADJ_AUTO);
                 break;
             case BTN_RESET:
-                Serial.println("reset adjustments");
+                //Serial.println("reset adjustments");
                 send_shortcut(ADJ_RESET);
                 break;
             case BTN_STAR_CLEAR:
                 if (isStarsMode) {
-                    Serial.println("no *");
+                    //Serial.println("no *");
                     send_shortcut(ADJ_STAR_COLOR_CLEAR, STAR);
                 } else {
-                    Serial.println("no color");
+                    //Serial.println("no color");
                     send_shortcut(ADJ_STAR_COLOR_CLEAR, COLOR);
                 }
                 break;
             case BTN_STAR1:
                 if (isStarsMode) {
-                    Serial.println("*");
+                    //Serial.println("*");
                     send_shortcut(ADJ_1STAR_RED, STAR);
                 } else {
-                    Serial.println("red");
+                    //Serial.println("red");
                     send_shortcut(ADJ_1STAR_RED, COLOR);
                 }
                 break;
             case BTN_STAR2:
                 if (isStarsMode) {
-                    Serial.println("**");
+                    //Serial.println("**");
                     send_shortcut(ADJ_2STARS_BLUE, STAR);
                 } else {
-                    Serial.println("blue");
+                    //Serial.println("blue");
                     send_shortcut(ADJ_2STARS_BLUE, COLOR);
                 }
                 break;        
             case BTN_STAR3:
                 if (isStarsMode) {
-                    Serial.println("***");
+                    //Serial.println("***");
                     send_shortcut(ADJ_3STARS_ORANGE, STAR);
                 } else {
-                    Serial.println("orange");
+                    //Serial.println("orange");
                     send_shortcut(ADJ_3STARS_ORANGE, COLOR);
                 }
                 break;        
             case BTN_STAR4:
                 if (isStarsMode) {
-                    Serial.println("****");
+                    //Serial.println("****");
                     send_shortcut(ADJ_4STARS_YELLOW, STAR);
                 } else {
-                    Serial.println("yellow");
+                    //Serial.println("yellow");
                     send_shortcut(ADJ_4STARS_YELLOW, COLOR);
                 }
                 break;        
             case BTN_STAR5:
                 if (isStarsMode) {
-                    Serial.println("*****");
+                    //Serial.println("*****");
                     send_shortcut(ADJ_5STARS_GREEN, STAR);
                 } else {
-                    Serial.println("green");
+                    //Serial.println("green");
                     send_shortcut(ADJ_5STARS_GREEN, COLOR);
                 }
                 break;        
             case BTN_STAR_TOGGLE:
-                Serial.println("toggle between stars and colors");
+                //Serial.println("toggle between stars and colors");
                 isStarsMode = !isStarsMode;
                 break;  
             case BTN_PAN:
-                Serial.println("pan");
+                //Serial.println("pan");
                 send_shortcut(ADJ_PAN);
                 break;
             case BTN_CROP:
-                Serial.println("crop");
+                //Serial.println("crop");
                 send_shortcut(ADJ_CROP);
                 break;
             case BTN_ROTATION:
-                Serial.println("rotation");
+                //Serial.println("rotation");
                 send_shortcut(ADJ_ROTATION);
                 break;  
             case BTN_SPOT:
-                Serial.println("spot");
+                //Serial.println("spot");
                 send_shortcut(ADJ_SPOT);
                 break;
             case BTN_DRAW_MASK:
-                Serial.println("draw mask");
+                //Serial.println("draw mask");
                 send_shortcut(ADJ_DRAW_MASK);
                 break;
             case BTN_ERASE_MASK:
-                Serial.println("erase mask");
+                //Serial.println("erase mask");
                 send_shortcut(ADJ_ERASE_MASK);
                 break;
             case BTN_DISPLAY_MASK:
-                Serial.println("display mask");
+                //Serial.println("display mask");
                 send_shortcut(ADJ_DISPLAY_MASK);
                 break;
             case BTN_BAL_PICK:
-                Serial.println("white balance pick");
+                //Serial.println("white balance pick");
                 send_shortcut(ADJ_W_BAL_PICK);
                 break;
             case BTN_ADJ:
-                Serial.println("copy paste adjustments");
+                //Serial.println("copy paste adjustments");
                 send_shortcut(ADJ_COPY_PASTE);
                 break;
             case BTN_UNDO:
-                Serial.println("undo");
+                //Serial.println("undo");
                 send_shortcut(ADJ_UNDO);
                 break;
             case BTN_REDO:
-                Serial.println("redo");
+                //Serial.println("redo");
                 send_shortcut(ADJ_REDO);
                 break;
             default:
@@ -287,11 +287,11 @@ void loop() {
           
         switch (oldBtn) {
             case BTN_ADD:
-                Serial.println("button hold   : +");
+                //Serial.println("button hold   : +");
                 send_shortcut(adj_shortcut, ADD);
                 break;  
             case BTN_SUB:
-                Serial.println("button hold   : -");
+                //Serial.println("button hold   : -");
                 send_shortcut(adj_shortcut, SUB);
                 break;
         }
@@ -304,13 +304,13 @@ void loop() {
     if (valEncAddSub > 0) {
         encAddSub.write(0);
         for (int i = 0; i < valEncAddSub; i++) {
-            Serial.println("Encoder ADD-SUB : +");
+            //Serial.println("Encoder ADD-SUB : +");
             send_shortcut(adj_shortcut, ADD);
         }
     } else if (valEncAddSub < 0) {
         encAddSub.write(0);
         for (int i = 0; i > valEncAddSub; i--) {
-            Serial.println("Encoder ADD-SUB : -");
+            //Serial.println("Encoder ADD-SUB : -");
             send_shortcut(adj_shortcut, SUB);
         }
     }
@@ -320,13 +320,13 @@ void loop() {
     if (valEncBrushSize > 0) {
         encBrushSize.write(0);
         for (int i = 0; i < valEncBrushSize; i++) {
-            Serial.println("Encoder BR SIZE : +");
+            //Serial.println("Encoder BR SIZE : +");
             send_shortcut(ADJ_BRUSH_SIZE, ADD);
         }
     } else if (valEncBrushSize < 0) {
         encBrushSize.write(0);
         for (int i = 0; i > valEncBrushSize; i--) {
-            Serial.println("Encoder BR SIZE : -");
+            //Serial.println("Encoder BR SIZE : -");
             send_shortcut(ADJ_BRUSH_SIZE, SUB);
         }
     }
@@ -337,14 +337,14 @@ void loop() {
         encBrushHardness.write(0);
         // send to times because increase is too small
         for (int i = 0; i < 2*valEncBrushHardness; i++) {
-            Serial.println("Encoder BR HARD : +");
+            //Serial.println("Encoder BR HARD : +");
             send_shortcut(ADJ_BRUSH_HARDNESS, ADD);
         }
     } else if (valEncBrushHardness < 0) {
         encBrushHardness.write(0);
         // send to times because decrease is too small
         for (int i = 0; i > 2*valEncBrushHardness; i--) {
-            Serial.println("Encoder BR HARD : -");
+            //Serial.println("Encoder BR HARD : -");
             send_shortcut(ADJ_BRUSH_HARDNESS, SUB);
         }
     }
